@@ -22,4 +22,13 @@ enum class Env {
     }
 }
 
+enum class CVType {
+    Object,
+    Array,
+    String,
+    Number,
+    Boolean,
+    Null
+}
+
 typealias EnvType = Env

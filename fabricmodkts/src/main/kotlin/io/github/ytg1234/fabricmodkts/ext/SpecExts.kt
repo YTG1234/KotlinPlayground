@@ -1,15 +1,15 @@
 package io.github.ytg1234.fabricmodkts.ext
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
-import com.google.gson.JsonPrimitive
+import com.google.gson.*
 import io.github.ytg1234.fabricmodkts.spec.*
+import io.github.ytg1234.fabricmodkts.spec.cv.*
 
 private val String.j: JsonElement
     get() = JsonPrimitive(this)
 private val Int.j: JsonElement
     get() = JsonPrimitive(this)
+
+fun FabricModMetadata.toJsonString() = toJson().toString()
 
 fun FabricModMetadata.toJson(): JsonObject {
     val result = JsonObject()
@@ -93,6 +93,13 @@ fun FabricModMetadata.toJson(): JsonObject {
 
     // Access Widener
     if (accessWidener != null) result.add("accessWidener", accessWidener.j)
+
+    // Custom Values
+    if (customValues.isNotEmpty()) {
+        val customJson = JsonObject()
+        customValues.forEach { (k, v) -> customJson.add(k, v.toJson()) }
+        result.add("custom", customJson)
+    }
 
     return result
 }

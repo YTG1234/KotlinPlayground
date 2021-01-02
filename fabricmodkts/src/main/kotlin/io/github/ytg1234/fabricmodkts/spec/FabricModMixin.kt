@@ -30,4 +30,7 @@ class MixinScope {
     fun mixin(body: FabricModMixin.Builder.() -> Unit) {
         mixins.add(FabricModMixin.create(body))
     }
+    fun mixin(config: String) {
+        mixins.add(FabricModMixin(config, Env.Both))
+    }
 }

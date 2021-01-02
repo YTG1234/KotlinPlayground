@@ -1,6 +1,8 @@
 package io.github.ytg1234.fabricmodkts.spec
 
 import io.github.ytg1234.fabricmodkts.FabricDsl
+import io.github.ytg1234.fabricmodkts.spec.cv.CustomValueScope
+import io.github.ytg1234.fabricmodkts.spec.cv.ModCustomValue
 
 class FabricModMetadata(
     val name: String?,
@@ -17,7 +19,8 @@ class FabricModMetadata(
     val license: MutableList<String>,
     val icon: String?,
     val mixins: MutableList<FabricModMixin>,
-    val accessWidener: String?
+    val accessWidener: String?,
+    val customValues: MutableMap<String, ModCustomValue>
 ) {
     @FabricDsl
     class Builder : FabricModMetadataBuilder {
@@ -40,6 +43,7 @@ class FabricModMetadata(
         override var license: MutableList<String> = mutableListOf()
         override var icon: String? = null
         override val mixins: MutableList<FabricModMixin> = mutableListOf()
+        override val customValues: MutableMap<String, ModCustomValue> = mutableMapOf()
         override var accessWidener: String? = null
 
         override fun dependencies(body: DependenciesScope.() -> Unit) {
@@ -64,7 +68,8 @@ class FabricModMetadata(
                 license,
                 icon,
                 mixins,
-                accessWidener
+                accessWidener,
+                customValues
             )
 
         override fun entrypoints(body: EntrypointScope.() -> Unit) {
@@ -102,18 +107,12 @@ class FabricModMetadata(
             scope.body()
             mixins.addAll(scope.mixins)
         }
-    }
 
-    override fun toString(): String {
-        return """
-            |Fabric Mod:
-            |ID: $id
-            |Name: $name
-            |Version: $version
-            |Environment: ${environment.name}
-            |Dependencies: 
-            |${deps.map { "\n" + it.toString() + "\n" }}
-        """.trimMargin("|")
+        override fun custom(body: CustomValueScope.() -> Unit) {
+            val scope = CustomValueScope()
+            scope.body()
+            customValues.putAll(scope.entries)
+        }
     }
 
     companion object {
@@ -142,6 +141,7 @@ interface FabricModMetadataBuilder {
     val entrypoints: MutableMap<String, MutableList<ModEntrypoint>>
     val adapters: MutableList<ModLanguageAdapter>
     val mixins: MutableList<FabricModMixin>
+    val customValues: MutableMap<String, ModCustomValue>
 
     fun dependencies(body: DependenciesScope.() -> Unit)
     fun build(): FabricModMetadata
@@ -151,4 +151,5 @@ interface FabricModMetadataBuilder {
     fun authors(body: PersonScope.() -> Unit)
     fun contributors(body: PersonScope.() -> Unit)
     fun mixins(body: MixinScope.() -> Unit)
+    fun custom(body: CustomValueScope.() -> Unit)
 }

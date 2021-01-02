@@ -1,5 +1,6 @@
 package io.github.ytg1234.fabricmodkts.script
 
+import io.github.ytg1234.fabricmodkts.spec.CVType
 import io.github.ytg1234.fabricmodkts.spec.Dep
 import io.github.ytg1234.fabricmodkts.spec.Env
 import io.github.ytg1234.fabricmodkts.spec.FabricModMetadataBuilder
@@ -30,6 +31,7 @@ object ModMetadataScriptCompilationConfiguration : ScriptCompilationConfiguratio
 
     defaultImports(
         Dep::class.java.name,
-        Env::class.java.name
+        Env::class.java.name,
+        CVType::class.java.name
     )
 })
