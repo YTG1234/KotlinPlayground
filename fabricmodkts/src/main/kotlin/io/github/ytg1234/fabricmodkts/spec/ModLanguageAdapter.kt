@@ -32,9 +32,9 @@ class LanguageAdapterScope {
     val adapters: MutableList<ModLanguageAdapter<*>> = mutableListOf()
 
     fun <T : DummyLanguageAdapter> add(name: String, body: ModLanguageAdapter.Builder<T>.() -> Unit) {
-        val bldr = ModLanguageAdapter.Builder<T>()
-        bldr.name = name
-        bldr.body()
-        adapters.add(bldr.build())
+        val builder = ModLanguageAdapter.Builder<T>()
+        builder.name = name
+        builder.body()
+        adapters.add(builder.build())
     }
 }

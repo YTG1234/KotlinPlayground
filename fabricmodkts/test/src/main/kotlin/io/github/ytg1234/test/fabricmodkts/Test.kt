@@ -1,5 +1,6 @@
 package io.github.ytg1234.test.fabricmodkts
 
+import io.github.ytg1234.fabricmodkts.ext.toJson
 import io.github.ytg1234.fabricmodkts.script.ModMetadataScriptHost
 import io.github.ytg1234.fabricmodkts.spec.FabricModMetadata
 import java.nio.file.Path
@@ -14,8 +15,6 @@ fun main() {
     val resultValue = res.valueOrThrow().returnValue
     if (resultValue is ResultValue.Value) {
         val modMeta = resultValue.value as FabricModMetadata
-        println(modMeta)
-        println(modMeta.entrypoints)
-        println(modMeta.adapters)
+        println(modMeta.toJson().toString())
     }
 }

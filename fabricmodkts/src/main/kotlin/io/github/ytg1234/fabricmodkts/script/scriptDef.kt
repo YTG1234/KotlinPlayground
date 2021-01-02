@@ -1,5 +1,7 @@
 package io.github.ytg1234.fabricmodkts.script
 
+import io.github.ytg1234.fabricmodkts.spec.Dep
+import io.github.ytg1234.fabricmodkts.spec.Env
 import io.github.ytg1234.fabricmodkts.spec.FabricModMetadataBuilder
 import kotlin.script.experimental.annotations.KotlinScript
 import kotlin.script.experimental.api.*
@@ -27,7 +29,7 @@ object ModMetadataScriptCompilationConfiguration : ScriptCompilationConfiguratio
     }
 
     defaultImports(
-        "Dep",
-        "Env"
+        Dep::class.java.name,
+        Env::class.java.name
     )
 })

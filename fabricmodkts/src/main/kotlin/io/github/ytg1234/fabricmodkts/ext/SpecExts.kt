@@ -61,7 +61,7 @@ fun FabricModMetadata.toJson(): JsonObject {
     }
 
     // Metadata
-    result.add("name", name.j)
+    result.add("name", name?.j ?: id.j)
     if (icon != null) result.add("icon", icon.j)
     if (contact != FabricModContact.EMPTY) result.add("contact", contact.toJson())
 
@@ -106,7 +106,7 @@ fun FabricModContact.toJson(): JsonObject {
 fun FabricModPerson.toJson(): JsonObject {
     val personJson = JsonObject()
     personJson.add("name", name.j)
-    personJson.add("contact", contact.toJson())
+    if (contact != FabricModContact.EMPTY) personJson.add("contact", contact.toJson())
     return personJson
 }
 

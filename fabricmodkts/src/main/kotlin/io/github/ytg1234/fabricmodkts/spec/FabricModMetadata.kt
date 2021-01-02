@@ -3,7 +3,7 @@ package io.github.ytg1234.fabricmodkts.spec
 import io.github.ytg1234.fabricmodkts.FabricDsl
 
 class FabricModMetadata(
-    val name: String,
+    val name: String?,
     val id: String,
     val version: String,
     val deps: MutableList<ModDependency>,
@@ -30,7 +30,7 @@ class FabricModMetadata(
         override val adapters: MutableList<ModLanguageAdapter<*>> = mutableListOf()
 
         // Metadata
-        override var name: String = id
+        override var name: String? = null
         override var description: String = ""
         override var contact: FabricModContact = FabricModContact.EMPTY
         val authors: MutableList<FabricModPerson> = mutableListOf()
@@ -115,7 +115,7 @@ class FabricModMetadata(
 
 @FabricDsl
 interface FabricModMetadataBuilder {
-    var name: String
+    var name: String?
     var id: String
     var version: String
     var description: String

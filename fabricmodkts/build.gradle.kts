@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
 }
@@ -18,5 +16,5 @@ dependencies {
 
     implementation(kotlin("reflect"))
 
-    implementation("com.google.code.gson", "gson", "2.8.6")
+    api("com.google.code.gson", "gson", "2.8.6")
 }
