@@ -2,13 +2,17 @@ package io.github.ytg1234.fabricmodkts.spec
 
 import io.github.ytg1234.fabricmodkts.FabricDsl
 
-class ModDependency(val type: Dep, val id: String, val version: String) {
+class ModDependency(val type: Dep, val id: String, val version: MutableList<String>) {
     @FabricDsl
     class Builder(val type: Dep) {
         lateinit var id: String
-        lateinit var version: String
+        val version: MutableList<String> = mutableListOf()
 
         fun build() = ModDependency(type, id, version)
+
+        fun withVersion(vararg versions: String) {
+            version.addAll(versions)
+        }
     }
 
     override fun toString(): String {

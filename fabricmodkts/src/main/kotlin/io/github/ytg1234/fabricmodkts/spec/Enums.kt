@@ -11,7 +11,15 @@ enum class Dep {
 enum class Env {
     Client,
     Server,
-    Both
+    Both;
+
+    override fun toString(): String {
+        return when(this) {
+            Client -> "client"
+            Server -> "server"
+            Both -> "*"
+        }
+    }
 }
 
 typealias EnvType = Env

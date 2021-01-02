@@ -15,7 +15,9 @@ class FabricModMetadata(
     val authors: MutableList<FabricModPerson>,
     val contributors: MutableList<FabricModPerson>,
     val license: MutableList<String>,
-    val icon: String?
+    val icon: String?,
+    val mixins: MutableList<FabricModMixin>,
+    val accessWidener: String?
 ) {
     @FabricDsl
     class Builder : FabricModMetadataBuilder {
@@ -37,6 +39,8 @@ class FabricModMetadata(
         val contributors: MutableList<FabricModPerson> = mutableListOf()
         override var license: MutableList<String> = mutableListOf()
         override var icon: String? = null
+        override val mixins: MutableList<FabricModMixin> = mutableListOf()
+        override var accessWidener: String? = null
 
         override fun dependencies(body: DependenciesScope.() -> Unit) {
             val depScope = DependenciesScope()
@@ -58,7 +62,9 @@ class FabricModMetadata(
                 authors,
                 contributors,
                 license,
-                icon
+                icon,
+                mixins,
+                accessWidener
             )
 
         override fun entrypoints(body: EntrypointScope.() -> Unit) {
@@ -89,6 +95,12 @@ class FabricModMetadata(
             val scope = PersonScope()
             scope.body()
             contributors.addAll(scope.persons)
+        }
+
+        override fun mixins(body: MixinScope.() -> Unit) {
+            val scope = MixinScope()
+            scope.body()
+            mixins.addAll(scope.mixins)
         }
     }
 
@@ -122,12 +134,14 @@ interface FabricModMetadataBuilder {
     var contact: FabricModContact
     var license: MutableList<String>
     var icon: String?
+    var accessWidener: String?
 
     // Optional
     val deps: MutableList<ModDependency>
     var environment: Env
     val entrypoints: MutableMap<String, MutableList<ModEntrypoint<*>>>
     val adapters: MutableList<ModLanguageAdapter<*>>
+    val mixins: MutableList<FabricModMixin>
 
     fun dependencies(body: DependenciesScope.() -> Unit)
     fun build(): FabricModMetadata
@@ -136,4 +150,5 @@ interface FabricModMetadataBuilder {
     fun contact(body: FabricModContact.Builder.() -> Unit)
     fun authors(body: PersonScope.() -> Unit)
     fun contributors(body: PersonScope.() -> Unit)
+    fun mixins(body: MixinScope.() -> Unit)
 }

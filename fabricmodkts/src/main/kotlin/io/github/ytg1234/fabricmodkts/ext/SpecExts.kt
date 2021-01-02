@@ -21,11 +21,7 @@ fun FabricModMetadata.toJson(): JsonObject {
 
     // Optional Fields
     result.add(
-        "environment", when (environment) {
-            Env.Client -> "client"
-            Env.Server -> "server"
-            Env.Both -> "*"
-        }.j
+        "environment", environment.toString().j
     )
 
     // Entrypoints
@@ -57,7 +53,9 @@ fun FabricModMetadata.toJson(): JsonObject {
                 Dep.Depends -> "depends"
             }, JsonObject()
         )
-        depTypeJson.add(dependency.id, dependency.version.j)
+        val versions = JsonArray()
+        dependency.version.forEach(versions::add)
+        depTypeJson.add(dependency.id, versions)
     }
 
     // Metadata
@@ -85,7 +83,24 @@ fun FabricModMetadata.toJson(): JsonObject {
         license.forEach(licenseJson::add)
     }
 
+    // Mixins
+    if (mixins.isNotEmpty()) {
+        val mixinsJson = JsonArray()
+        mixins.forEach { mixinsJson.add(it.toJson()) }
+        result.add("mixins", mixinsJson)
+    }
+
+    // Access Widener
+    if (accessWidener != null) result.add("accessWidener", accessWidener.j)
+
     return result
+}
+
+fun FabricModMixin.toJson(): JsonObject {
+    val obj = JsonObject()
+    obj.add("config", config.j)
+    obj.add("environment", env.toString().j)
+    return obj
 }
 
 fun FabricModContact.toJson(): JsonObject {

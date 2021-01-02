@@ -19,11 +19,11 @@ fun main(args: Array<String>) {
             dependencies {
                 create(type = Dep.Depends) {
                     id = "minecraft"
-                    version = "1.16.x"
+                    withVersion("1.16.x")
                 }
                 create(type = Dep.Depends) {
                     id = "fabric"
-                    version = ">=0.28.0"
+                    withVersion(">=0.28.0")
                 }
             }
 
