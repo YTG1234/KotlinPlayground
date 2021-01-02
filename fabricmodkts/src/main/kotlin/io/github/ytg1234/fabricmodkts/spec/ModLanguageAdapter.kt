@@ -32,8 +32,8 @@ class LanguageAdapterScope {
 
     fun add(name: String, body: ModLanguageAdapter.Builder.() -> Unit) {
         val builder = ModLanguageAdapter.Builder()
-        builder.name = name
         builder.body()
+        builder.name = name
         adapters.add(builder.build())
     }
 }
