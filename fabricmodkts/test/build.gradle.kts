@@ -16,7 +16,7 @@ dependencies {
     implementation(kotlin("scripting-jvm-host"))
     implementation(kotlin("scripting-common"))
 
-    implementation(project(":"))
+    implementation(project(":fabricmodkts"))
 }
 
 tasks.withType<KotlinCompile> {

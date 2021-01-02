@@ -1,3 +1,4 @@
 
 rootProject.name = "KotlinPlayground"
-include("test")
+include("fabricmodkts")
+include("fabricmodkts:test")

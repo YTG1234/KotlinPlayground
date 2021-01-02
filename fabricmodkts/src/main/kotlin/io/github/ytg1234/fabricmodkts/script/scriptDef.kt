@@ -18,7 +18,7 @@ object ModMetadataScriptCompilationConfiguration : ScriptCompilationConfiguratio
         dependenciesFromClassContext(
             ModMetadataScript::class,
             "kotlin-stdlib",
-            "KotlinPlayground"
+            "fabricmodkts"
         )
     }
 
@@ -27,7 +27,7 @@ object ModMetadataScriptCompilationConfiguration : ScriptCompilationConfiguratio
     }
 
     defaultImports(
-        "io.github.ytg1234.fabricmodkts.spec.Dep",
-        "io.github.ytg1234.fabricmodkts.spec.Env"
+        "Dep",
+        "Env"
     )
 })
