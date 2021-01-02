@@ -41,6 +41,14 @@ class DependenciesScope {
         this.withDep(ModDependency.create(type, body))
     }
 
+    // region shortcuts
+    fun depends(body: ModDependency.Builder.() -> Unit) = this.create(Dep.Depends, body)
+    fun recommends(body: ModDependency.Builder.() -> Unit) = this.create(Dep.Recommends, body)
+    fun suggests(body: ModDependency.Builder.() -> Unit) = this.create(Dep.Suggests, body)
+    fun conflicts(body: ModDependency.Builder.() -> Unit) = this.create(Dep.Conflicts, body)
+    fun breaks(body: ModDependency.Builder.() -> Unit) = this.create(Dep.Breaks, body)
+    // endregion
+
     fun withDep(dep: ModDependency) {
         deps.add(dep)
     }

@@ -47,12 +47,16 @@ fun main() {
             environment = Env.Both
 
             dependencies {
-                create(Dep.Depends) {
+                depends {
                     id = "minecraft"
                     withVersion("1.16.x")
                 }
-                create(Dep.Suggests) {
+                suggests {
                     id = "flamingo"
+                    withVersion("*")
+                }
+                breaks {
+                    id = "optifabric"
                     withVersion("*")
                 }
             }
