@@ -1,7 +1,6 @@
 package io.github.ytg1234.fabricmodkts.spec
 
 import io.github.ytg1234.fabricmodkts.FabricDsl
-import io.github.ytg1234.fabricmodkts.dummy.DummyLanguageAdapter
 
 class ModLanguageAdapter(val cls: String, val name: String) {
     @FabricDsl
