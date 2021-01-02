@@ -7,10 +7,10 @@ class FabricModMetadata(
     val id: String,
     val version: String,
     val deps: MutableList<ModDependency>,
-    val entrypoints: MutableMap<String, MutableList<ModEntrypoint<*>>>,
+    val entrypoints: MutableMap<String, MutableList<ModEntrypoint>>,
     val environment: Env,
-    val adapters: MutableList<ModLanguageAdapter<*>>,
-    val description: String,
+    val adapters: MutableList<ModLanguageAdapter>,
+    val description: String?,
     val contact: FabricModContact,
     val authors: MutableList<FabricModPerson>,
     val contributors: MutableList<FabricModPerson>,
@@ -28,12 +28,12 @@ class FabricModMetadata(
         // Optional
         override val deps = mutableListOf<ModDependency>()
         override var environment: Env = Env.Both
-        override val entrypoints: MutableMap<String, MutableList<ModEntrypoint<*>>> = mutableMapOf()
-        override val adapters: MutableList<ModLanguageAdapter<*>> = mutableListOf()
+        override val entrypoints: MutableMap<String, MutableList<ModEntrypoint>> = mutableMapOf()
+        override val adapters: MutableList<ModLanguageAdapter> = mutableListOf()
 
         // Metadata
         override var name: String? = null
-        override var description: String = ""
+        override var description: String? = null
         override var contact: FabricModContact = FabricModContact.EMPTY
         val authors: MutableList<FabricModPerson> = mutableListOf()
         val contributors: MutableList<FabricModPerson> = mutableListOf()
@@ -130,7 +130,7 @@ interface FabricModMetadataBuilder {
     var name: String?
     var id: String
     var version: String
-    var description: String
+    var description: String?
     var contact: FabricModContact
     var license: MutableList<String>
     var icon: String?
@@ -139,8 +139,8 @@ interface FabricModMetadataBuilder {
     // Optional
     val deps: MutableList<ModDependency>
     var environment: Env
-    val entrypoints: MutableMap<String, MutableList<ModEntrypoint<*>>>
-    val adapters: MutableList<ModLanguageAdapter<*>>
+    val entrypoints: MutableMap<String, MutableList<ModEntrypoint>>
+    val adapters: MutableList<ModLanguageAdapter>
     val mixins: MutableList<FabricModMixin>
 
     fun dependencies(body: DependenciesScope.() -> Unit)

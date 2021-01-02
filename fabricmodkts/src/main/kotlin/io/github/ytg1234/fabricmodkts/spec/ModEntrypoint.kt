@@ -2,49 +2,47 @@ package io.github.ytg1234.fabricmodkts.spec
 
 import io.github.ytg1234.fabricmodkts.FabricDsl
 
-class ModEntrypoint<T>(val cls: Class<T>) {
+class ModEntrypoint(val cls: String) {
     @FabricDsl
-    class Builder<T> {
-        lateinit var cls: Class<T>
+    class Builder {
+        lateinit var cls: String
 
-        fun build(): ModEntrypoint<T> {
+        fun build(): ModEntrypoint {
             return ModEntrypoint(cls)
         }
     }
 
     companion object {
-        fun <T> create(body: Builder<T>.() -> Unit): ModEntrypoint<T> {
-            val builder = Builder<T>()
+        fun create(body: Builder.() -> Unit): ModEntrypoint {
+            val builder = Builder()
             builder.body()
             return builder.build()
         }
     }
 
     override fun toString(): String {
-        return cls.name
+        return cls
     }
 }
 
 @FabricDsl
 class EntrypointScope {
-    val entrypoints = mutableMapOf<String, MutableList<ModEntrypoint<*>>>()
+    val entrypoints = mutableMapOf<String, MutableList<ModEntrypoint>>()
 
-    fun <T> list(name: String, body: ListScope<T>.() -> Unit) {
-        val ls = ListScope<T>()
+    fun list(name: String, body: ListScope.() -> Unit) {
+        val ls = ListScope()
         ls.body()
         entrypoints[name] = ls.entrypoints.toMutableList()
     }
 
-    fun <T> list(clazz: Class<T>, name: String, body: ListScope<T>.() -> Unit) = list(name, body)
-
     @FabricDsl
-    class ListScope<T>() {
-        val entrypoints: MutableList<ModEntrypoint<T>> = mutableListOf()
+    class ListScope() {
+        val entrypoints: MutableList<ModEntrypoint> = mutableListOf()
 
-        fun add(body: ModEntrypoint.Builder<T>.() -> Unit) {
+        fun add(body: ModEntrypoint.Builder.() -> Unit) {
             entrypoints.add(ModEntrypoint.create(body))
         }
 
-        fun add(cls: Class<T>) = entrypoints.add(ModEntrypoint(cls))
+        fun add(cls: String) = entrypoints.add(ModEntrypoint(cls))
     }
 }

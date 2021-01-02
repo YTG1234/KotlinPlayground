@@ -29,7 +29,7 @@ fun FabricModMetadata.toJson(): JsonObject {
         val jsonEntrypoints = JsonObject()
         for (entry in entrypoints) {
             val arr = JsonArray()
-            entry.value.forEach { arr.add(it.cls.name) }
+            entry.value.forEach { arr.add(it.cls) }
             jsonEntrypoints.add(entry.key, arr)
         }
         result.add("entrypoints", jsonEntrypoints)
@@ -38,7 +38,7 @@ fun FabricModMetadata.toJson(): JsonObject {
     // Adapters
     if (adapters.isNotEmpty()) {
         val jsonAdapters = JsonObject()
-        adapters.forEach { jsonAdapters.add(it.name, it.cls.name.j) }
+        adapters.forEach { jsonAdapters.add(it.name, it.cls.j) }
         result.add("languageAdapters", jsonAdapters)
     }
 
@@ -62,6 +62,7 @@ fun FabricModMetadata.toJson(): JsonObject {
     result.add("name", name?.j ?: id.j)
     if (icon != null) result.add("icon", icon.j)
     if (contact != FabricModContact.EMPTY) result.add("contact", contact.toJson())
+    if (description != null) result.add("description", description.j)
 
     // Authors
     if (authors.isNotEmpty()) {
