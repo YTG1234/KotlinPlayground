@@ -5,6 +5,22 @@ interface UtilsProvider {
     operator fun Boolean.invoke() = CvBoolean(this)
     operator fun Nothing?.invoke() = CvNull()
     operator fun String.invoke() = CvString(this)
+
+    operator fun Number.unaryPlus() = this()
+    operator fun Boolean.unaryPlus() = this()
+    operator fun Nothing?.unaryPlus() = this()
+    operator fun String.unaryPlus() = this()
+
+    operator fun Number.unaryMinus() = this()
+    operator fun Boolean.unaryMinus() = this()
+    operator fun Nothing?.unaryMinus() = this()
+    operator fun String.unaryMinus() = this()
+
+    operator fun invoke(body: CvObject.Builder.() -> Unit): CvObject {
+        val builder = CvObject.Builder()
+        builder.body()
+        return builder.build()
+    }
 }
 
 interface ObjectUtils {
@@ -38,4 +54,6 @@ interface ObjectUtils {
     infix fun String.set(c: List<ModCustomValue>) {
         entries[this] = CvArray(c.toMutableList())
     }
+
+    operator fun String.minus(c: ModCustomValue) = this(c)
 }

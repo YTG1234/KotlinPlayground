@@ -20,7 +20,8 @@ class FabricModMetadata(
     val icon: String?,
     val mixins: MutableList<FabricModMixin>,
     val accessWidener: String?,
-    val customValues: MutableMap<String, ModCustomValue>
+    val customValues: MutableMap<String, ModCustomValue>,
+    val jars: MutableList<String>
 ) {
     @FabricDsl
     class Builder : FabricModMetadataBuilder {
@@ -33,6 +34,7 @@ class FabricModMetadata(
         override var environment: Env = Env.Both
         override val entrypoints: MutableMap<String, MutableList<ModEntrypoint>> = mutableMapOf()
         override val adapters: MutableList<ModLanguageAdapter> = mutableListOf()
+        override val jars: MutableList<String> = mutableListOf()
 
         // Metadata
         override var name: String? = null
@@ -69,7 +71,8 @@ class FabricModMetadata(
                 icon,
                 mixins,
                 accessWidener,
-                customValues
+                customValues,
+                jars
             )
 
         override fun entrypoints(body: EntrypointScope.() -> Unit) {
@@ -113,6 +116,12 @@ class FabricModMetadata(
             scope.body()
             customValues.putAll(scope.entries)
         }
+
+        override fun jars(file: Boolean, jar: Boolean, body: JijScope.() -> Unit) {
+            val scope = JijScope(checkForFile = file, checkForJar = jar)
+            scope.body()
+            jars.addAll(scope.paths)
+        }
     }
 
     companion object {
@@ -142,6 +151,7 @@ interface FabricModMetadataBuilder {
     val adapters: MutableList<ModLanguageAdapter>
     val mixins: MutableList<FabricModMixin>
     val customValues: MutableMap<String, ModCustomValue>
+    val jars: MutableList<String>
 
     fun dependencies(body: DependenciesScope.() -> Unit)
     fun build(): FabricModMetadata
@@ -152,4 +162,5 @@ interface FabricModMetadataBuilder {
     fun contributors(body: PersonScope.() -> Unit)
     fun mixins(body: MixinScope.() -> Unit)
     fun custom(body: CustomValueScope.() -> Unit)
+    fun jars(file: Boolean = false, jar: Boolean = false, body: JijScope.() -> Unit)
 }

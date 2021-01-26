@@ -83,7 +83,20 @@ fun main() {
             accessWidener = "hello.accessWidener"
 
             custom {
-                "modmenu:api" set true()
+                "modmenu:api" - +true
+                "someMod:someValue"[
+                    +"a",
+                    +"b",
+                    +"c",
+                    this {
+                        "modmenu:api" - +true
+                    }
+                ]
+            }
+
+            jars(file = true, jar = true) {
+                +"META-INF/jars/myThingy.jar"
+                from("META-INF/jars")
             }
         }.toJsonString()
     )

@@ -101,6 +101,17 @@ fun FabricModMetadata.toJson(): JsonObject {
         result.add("custom", customJson)
     }
 
+    // jars
+    if (jars.isNotEmpty()) {
+        val jarsJson = JsonArray()
+        jars.forEach {
+            val jarJson = JsonObject()
+            jarJson.add("file", JsonPrimitive(it))
+            jarsJson.add(jarJson)
+        }
+        result.add("jars", jarsJson)
+    }
+
     return result
 }
 
