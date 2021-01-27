@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "io.github.ytg1234"
-version = "1.0"
+version = "1.1"
 
 repositories {
     mavenCentral()
@@ -28,6 +28,6 @@ publishing {
     }
 
     repositories {
-        maven(url = System.getenv("MAVEN_REPO"))
+        if (System.getenv("MAVEN_REPO") != null) maven(url = System.getenv("MAVEN_REPO"))
     }
 }
